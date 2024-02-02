@@ -1,0 +1,63 @@
+créer bdd
+créer git
+créer template
+gitignore avec database.txt
+mettre info connexion bdd dans database.txt, puisnon le laisse de côté
+
+1. on crée le modele : Category.php
+
+2. index : 
+// require
+// instancier (avec string nom arbitraire)
+// var_dump
+
+// setId (avec int id arbitraire)
+
+// var_dump
+
+3. créer la classe AbstractManager.php
+
+4. y mettre cette méthode :
+
+***
+private function getDatabaseInfo() : array
+    {
+        $handle = fopen("config/database.txt", "r");
+        $lineNbr = 0;
+        $info = [];
+
+        if ($handle) {
+
+            while (($line = fgets($handle)) !== false) {
+
+                if($lineNbr === 0)
+                {
+                    $info["user"] = trim($line);
+                }
+                else if($lineNbr === 1)
+                {
+                    $info["password"] = trim($line);
+                }
+                else if($lineNbr === 2)
+                {
+                    $info["host"] = trim($line);
+                }
+                else if($lineNbr === 3)
+                {
+                    $info["db_name"] = trim($line);
+                }
+
+                $lineNbr++;
+            }
+
+            fclose($handle);
+        }
+        return $info;
+    }
+***
+
+5. Ensuite créez le constructeur de votre AbstractManager (attention n'oubliez pas l'attribut $db de la classe) et faite en sorte qu'il créé la connexion à votre base de données
+
+6. Créez une classe CategoryManager qui hérite de votre AbstractManager. Dans son constructeur, n'oubliez pas d'appeler le constructeur de la classe parente
+
+
